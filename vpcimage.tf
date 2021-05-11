@@ -1,4 +1,4 @@
-data ibm_resource_group "group" {
+data "ibm_resource_group" "group" {
   name = var.resource_group
 }
 
@@ -6,9 +6,9 @@ data ibm_resource_group "group" {
 data "external" "f5_public_image" {
   program = ["python", "${path.module}/image_selector.py"]
   query = {
-      download_region = var.download_region
-      version_prefix = var.bigiq_version
-      type = var.bigiq_image_type
+    download_region = var.download_region
+    version_prefix  = var.bigiq_version
+    type            = var.bigiq_image_type
   }
 }
 
@@ -17,10 +17,14 @@ locals {
 }
 
 resource "ibm_is_image" "vpc_custom_image" {
-  name = local.vpc_image_name
-  resource_group = data.ibm_resource_group.group.id
-  href = data.external.f5_public_image.result.image_sql_url
+  name             = local.vpc_image_name
+  resource_group   = data.ibm_resource_group.group.id
+  href             = data.external.f5_public_image.result.image_sql_url
   operating_system = "centos-7-amd64"
+  timeouts {
+    create = "60m"
+    delete = "60m"
+  }
 }
 
 output "vpc_image_name" {
