@@ -34,10 +34,6 @@ def longest_substr(catalog_image_name, version_prefix):
 
 def main():
     jsondata = json.loads(sys.stdin.read())
-    if 'type' not in jsondata:
-        sys.stderr.write(
-            'type, download_region, verion_prefix inputs require to query public f5 images')
-        sys.exit(1)
     if 'download_region' not in jsondata:
         sys.stderr.write(
             'type, download_region, verion_prefix inputs require to query public f5 images')
