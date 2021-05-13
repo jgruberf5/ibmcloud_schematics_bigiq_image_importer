@@ -5,7 +5,7 @@ import json
 import urllib.request
 import difflib
 
-ALLOWED_TMOS_TYPES = ['standard', 'large']
+
 PUBLIC_REGIONS = ['us-south', 'us-east', 'eu-gb', 'eu-de', 'jp-tok', 'au-syd']
 
 
@@ -23,9 +23,7 @@ def get_public_images(region):
         sys.exit(1)
 
 
-def longest_substr(type, catalog_image_name, version_prefix):
-    if type == 'large' and catalog_image_name.find(type) < 0:
-        return 0
+def longest_substr(catalog_image_name, version_prefix):
     if catalog_image_name.find(version_prefix) < 0:
         return 0
     seqMatch = difflib.SequenceMatcher(None, catalog_image_name, version_prefix)
@@ -48,11 +46,6 @@ def main():
         sys.stderr.write(
             'type, download_region, verion_prefix inputs require to query public f5 images')
         sys.exit(1)
-    bigiq_type = jsondata['type'].lower()
-    if bigiq_type not in ALLOWED_TMOS_TYPES:
-        sys.stderr.write('TMOS type must be in: %s' %
-                         ALLOWED_TMOS_TYPES)
-        sys.exit(1)
     bigiq_version_match = jsondata['version_prefix'].lower().replace('.','-')
     region = jsondata['download_region'].lower()
     if region not in PUBLIC_REGIONS:
@@ -62,7 +55,7 @@ def main():
     image_url = None
     image_name = None
     for image in image_catalog[region]:
-        match_length = longest_substr(bigiq_type, image['image_name'], bigiq_version_match)
+        match_length = longest_substr(image['image_name'], bigiq_version_match)
         if match_length >= max_match:
             max_match = match_length
             image_url = image['image_sql_url']

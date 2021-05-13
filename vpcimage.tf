@@ -8,7 +8,6 @@ data "external" "f5_public_image" {
   query = {
     download_region = var.download_region
     version_prefix  = var.bigiq_version
-    type            = var.bigiq_image_type
   }
 }
 

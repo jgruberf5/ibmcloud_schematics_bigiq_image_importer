@@ -54,13 +54,4 @@ As an example, for BIG-IQ version 7, you can simply specify ```7```, but to forc
 
 This is not required and will default to ```7.1```.
 
-**User Variable:** ```bigiq_image_type```
-
-**Values:**
-
-- ```standard```
-- ```large```
-
-This will specifiy if you want an standard or large BIG-IQ image.
-
-This is not required and will default to ```standard```.
+**Only BIG-IQ standard images are supported in IBM VPC Gen2 Cloud. You can not use LARGE images.**

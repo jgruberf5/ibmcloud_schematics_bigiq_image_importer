@@ -54,18 +54,3 @@ variable "bigiq_version" {
   default     = "7.1"
   description = "The version of BIG-IQ image to Import"
 }
-
-##################################################################################
-# bigiq_image_type - The type of BIGIQ image to Import
-##################################################################################
-variable "bigiq_image_type" {
-  type        = string
-  default     = "standard"
-  description = "Select between standard or large TMOS VE images"
-  # when IBM Schematics 0.13 has the IBM provider installed
-  #validation {
-  #  condition = contains(['standard', 'large'], var.bigiq_image_type)
-  #  error_message = "bigiq_image_type can be standard or large only"
-  #}
-}
-
